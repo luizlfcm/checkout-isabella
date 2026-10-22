@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0B6B52">
+<title>Pagamento seguro — Programa FIRME</title>
+<link rel="icon" href="/img/firme-compacto.png">
+<style>
+:root{--bg:#eef1f5;--card:#fff;--txt:#14181f;--mut:#566070;--brd:#d5dae1;--acc:#f97316;--acd:#c2570c;--grn:#16a34a;--grd:#128a3d;--blu:#1d4ed8;--red:#dc2626;--r:14px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font:18px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;-webkit-text-size-adjust:100%}
+.topbar{background:#0B6B52;color:#fff;text-align:center;font-size:15px;font-weight:700;padding:10px 12px;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+.topbar img{height:22px;background:#fff;border-radius:6px;padding:2px 6px}
+.wrap{max-width:540px;margin:0 auto;padding:14px 14px 40px}
+h1{font-size:22px;margin:8px 0 2px}
+.sub{color:var(--mut);font-size:15px;margin:0 0 14px}
+.card{background:var(--card);border:1px solid var(--brd);border-radius:var(--r);padding:18px;margin-bottom:14px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.prod{display:flex;gap:14px;align-items:center}
+.prod img{width:92px;height:92px;border-radius:12px;object-fit:contain;background:#fff;flex:none;border:1px solid var(--brd)}
+.prod .nm{font-size:17px;font-weight:800;line-height:1.25}
+.inc{list-style:none;margin:-6px 0 14px;padding:0 4px;font-size:15px;color:var(--txt)}.inc li{position:relative;padding-left:24px;margin:5px 0}.inc li::before{content:"✓";position:absolute;left:0;color:var(--grn);font-weight:900}
+.prod .ok{color:var(--grd);font-size:14px;font-weight:700;margin-top:4px}
+.price{font-size:28px;font-weight:900;color:var(--grd);margin-top:2px}
+.price small{font-size:14px;font-weight:600;color:var(--mut)}
+.step{display:flex;align-items:center;gap:10px;font-size:19px;font-weight:800;margin-bottom:12px}
+.step .n{background:var(--blu);color:#fff;width:30px;height:30px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex:none}
+label{display:block;font-weight:700;margin:14px 0 6px;font-size:16px}
+.step+label,.warn+label{margin-top:12px}
+input[type=email],input[type=text],input[type=tel],.field{width:100%;height:54px;font-size:19px;padding:0 14px;border:2px solid var(--brd);border-radius:12px;background:#fff;color:var(--txt)}
+input:focus{outline:none;border-color:var(--blu)}
+.hint{font-size:14px;color:var(--mut);margin-top:4px}
+.warn{background:#fff7d6;border:2px solid #f5c542;border-radius:12px;padding:12px 14px;font-size:16px;font-weight:700;color:#6b4e00;margin-bottom:6px}
+.err{color:var(--red);font-weight:700;font-size:16px;margin:10px 0 0;display:none;background:#fdecec;border-radius:10px;padding:10px 12px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tab{border:2px solid var(--brd);background:#fff;border-radius:12px;padding:14px 8px;font-size:17px;font-weight:800;cursor:pointer;color:var(--txt);text-align:center;position:relative}
+.tab small{display:block;font-weight:600;color:var(--mut);font-size:13px}
+.tab.on{border-color:var(--grn);background:#ecfdf3}
+.tab.on::after{content:"✓";position:absolute;top:6px;right:9px;color:var(--grn);font-weight:900}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.howto{background:#eef4ff;border:1px solid #c7d8ff;border-radius:12px;padding:14px;margin-top:14px;font-size:16px}
+.howto b.t{display:block;margin-bottom:6px;color:var(--blu)}
+.howto ol{margin:0 0 8px;padding-left:22px}.howto li{margin:3px 0}
+.howto .inst{font-weight:700;color:#0b3a99}
+.aprov{font-size:21px;font-weight:900;margin:18px 2px 10px;padding-bottom:8px;border-bottom:3px solid var(--acc)}
+.bump{background:#fff;border:2px solid var(--grn);border-radius:var(--r);margin-bottom:14px;overflow:hidden;box-shadow:0 2px 8px rgba(22,163,74,.12)}
+.bump .top{display:flex;gap:14px;padding:16px}
+.bump img{width:86px;height:86px;border-radius:10px;object-fit:contain;background:#fff;flex:none;border:1px solid var(--brd)}
+.bump .bt{font-weight:800;font-size:18px;line-height:1.25}
+.bump .bd{font-size:15px;color:var(--mut);margin:4px 0 6px}
+.bump .bp s{color:#8a93a0;font-size:15px}
+.bump .off{background:#16a34a;color:#fff;font-size:13px;font-weight:800;border-radius:6px;padding:2px 7px;margin:0 6px}
+.bump .bp{display:flex;align-items:center;flex-wrap:wrap;gap:4px 0}.bump .bp s,.bump .bp b,.bump .off{white-space:nowrap}.bump .bp b{font-size:22px;color:var(--grd)}
+.bump .car{padding:0 16px 14px;font-size:15px;line-height:1.5;color:#374151}
+.bump .car .ch{font-weight:800;font-size:17px;line-height:1.3;color:var(--grd);margin-bottom:6px}
+.bump .car p{margin:0 0 8px}
+.bump .car ul{list-style:none;margin:0 0 8px;padding:0}
+.bump .car li{position:relative;padding-left:24px;margin:0 0 5px}
+.bump .car li::before{content:"✓";position:absolute;left:0;top:0;color:#16a34a;font-weight:900}
+.bump .car .cf{background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:8px 10px;font-weight:700;color:#9a3412;font-size:14px}
+.bump .bar{display:flex;gap:12px;align-items:center;background:#e6f8ec;padding:14px 16px;font-weight:800;cursor:pointer;font-size:17px;margin:0;border-top:1px solid #bfe9cd}
+.bump .bar input{width:28px;height:28px;flex:none;accent-color:#16a34a}
+.bump.sel{border-color:var(--acc);box-shadow:0 2px 12px rgba(249,115,22,.3)}.bump.sel .bar{background:#fff1e3;border-top-color:#fbd5ae}
+.lines .l{display:flex;justify-content:space-between;gap:12px;font-size:16px;padding:4px 0;color:var(--mut)}.lines .l span:last-child{white-space:nowrap}
+.total{display:flex;justify-content:space-between;font-size:22px;font-weight:900;margin-top:8px;padding-top:12px;border-top:1px solid var(--brd)}
+.btn{width:100%;margin-top:14px;height:66px;border:0;border-radius:14px;background:linear-gradient(180deg,#22c55e,#128a3d);color:#fff;font-size:21px;font-weight:900;cursor:pointer;box-shadow:0 4px 0 #0c6b2f,0 8px 16px rgba(22,163,74,.35);animation:pulse 2s infinite}
+.btn:active{transform:translateY(2px)}
+.btn:disabled{opacity:.6;cursor:wait;animation:none}
+@keyframes pulse{50%{transform:scale(1.015)}}
+.selos{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}
+.selo{display:flex;align-items:center;gap:8px;background:#f6f8fa;border:1px solid var(--brd);border-radius:10px;padding:9px 10px;font-size:13.5px;font-weight:700;line-height:1.2}
+.selo i{font-style:normal;font-size:20px}
+.mp{text-align:center;margin-top:14px;color:var(--mut);font-size:13px}
+.mp img{height:30px;display:block;margin:0 auto 4px}
+.foot{text-align:center;color:var(--mut);font-size:12.5px;line-height:1.5;margin-top:10px}
+.foot a{color:var(--blu)}
+.hide{display:none}
+.qr{text-align:center}.qr img.q{width:240px;height:240px;max-width:100%;border:1px solid var(--brd);border-radius:12px}
+.code{word-break:break-all;font:13px/1.3 monospace;background:#f1f3f6;border-radius:10px;padding:10px;margin:10px 0;max-height:84px;overflow:auto}
+.btn2{width:100%;height:58px;border:2px solid var(--grn);background:#fff;color:var(--grd);border-radius:14px;font-size:18px;font-weight:800;cursor:pointer}
+.steps{padding-left:22px;margin:10px 0;text-align:left}.steps li{margin:6px 0}
+.up{border:3px solid var(--acc);border-radius:18px;background:#fff;padding:0;margin-top:18px;overflow:hidden;text-align:left;box-shadow:0 6px 26px rgba(249,115,22,.25)}
+.up .upt{background:linear-gradient(135deg,#c2570c,#f97316);color:#fff;padding:12px 16px;font-size:12px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;text-align:center}
+.up .upb{padding:18px 16px}.up h2{font-size:22px;line-height:1.2;font-weight:900;margin:0 0 10px}.up .lead{font-size:14.5px;line-height:1.6;color:var(--mut);margin:0 0 14px}
+.up ul{list-style:none;margin:0 0 16px;padding:0}.up li{position:relative;padding:0 0 10px 28px;font-size:14.5px;line-height:1.45}.up li:before{content:'✓';position:absolute;left:0;top:0;width:20px;height:20px;border-radius:50%;background:var(--grn);color:#fff;font-size:12px;font-weight:900;text-align:center;line-height:20px}
+.up .preco{background:#fff7ed;border:2px dashed var(--acc);border-radius:14px;padding:14px;text-align:center;margin:0 0 12px}.up .preco small{display:block;color:var(--mut);font-size:13px}.up .preco .v{font-size:42px;font-weight:900;color:var(--acd);line-height:1.1}
+.up .cd{text-align:center;font-size:13px;color:var(--mut);margin:0 0 12px}.up .cd b{display:block;font-size:26px;color:var(--red);font-variant-numeric:tabular-nums;letter-spacing:1px}
+.up .upbtn{display:flex;align-items:center;justify-content:center;text-decoration:none;min-height:62px;padding:8px 12px;border-radius:14px;background:linear-gradient(180deg,#f97316,#c2570c);color:#fff;font-size:18px;font-weight:900;text-align:center;box-shadow:0 4px 14px rgba(194,87,12,.4)}
+.up .gar{font-size:12.5px;color:var(--mut);text-align:center;margin:10px 0 0;line-height:1.5}.up .nao{display:block;text-align:center;font-size:13px;color:var(--mut);margin-top:12px;text-decoration:underline}
+.okk{text-align:center}.okk .big{font-size:56px}
+.wait{display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--acc);margin-right:8px;animation:p 1s infinite}
+@keyframes p{50%{opacity:.25}}
+.xo{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px}
+.xo.hide{display:none}
+.xo .bx{position:relative;max-width:420px;width:100%;max-height:calc(100vh - 32px);display:flex;flex-direction:column;align-items:center}
+.xo img{width:100%;max-height:calc(100vh - 110px);object-fit:contain;border-radius:18px;cursor:pointer;display:block}
+.xo .fx{position:absolute;top:-10px;right:-6px;width:40px;height:40px;border-radius:50%;border:0;background:#fff;color:#111;font-size:24px;font-weight:700;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+.xo .nao{margin-top:12px;background:rgba(0,0,0,.7);border-radius:10px;border:0;color:#d9d9d9;font-size:16px;text-decoration:underline;cursor:pointer;padding:8px}
+.l s{color:#8a8f98;margin-right:6px;font-weight:400}
+.recb{background:#eaf4ff;border:2px solid #9cc7f5;border-radius:12px;padding:12px 14px;font-size:16px;line-height:1.4;color:#12395f;margin:12px 0;text-align:left}
+.aviso{background:#fff7d6;border:2px solid #f5c542;border-radius:12px;padding:12px;font-weight:700;font-size:16px;color:#6b4e00;margin:12px 0}
+.linkbtn{display:flex;align-items:center;justify-content:center;text-decoration:none;margin-top:14px;height:64px;border-radius:14px;background:linear-gradient(180deg,#22c55e,#128a3d);color:#fff;font-size:20px;font-weight:900}
+.exc{display:flex;align-items:center;justify-content:center;gap:10px;background:#16a34a;color:#fff;border-radius:12px;padding:14px 12px;font-size:21px;font-weight:900;margin:18px 0 8px;text-align:center}
+.excSub{font-size:17px;line-height:1.4;text-align:center;margin:0 4px 12px;color:#27303a}
+.deps{margin-top:6px}.deps h2{font-size:20px;font-weight:900;margin:0 0 4px}.deps .dsub{font-size:15px;color:var(--mut);margin:0 0 12px;line-height:1.4}
+.dep{background:#eef9e8;border:1px solid #cfe9c3;border-left:5px solid #16a34a;border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.dep q{display:block;quotes:none;font-size:18px;line-height:1.45;color:#1b2430}
+.dep .dm{display:block;margin-top:8px;font-size:14px;color:#566170;font-weight:700}
+.deps .dfim{font-size:13px;color:var(--mut);line-height:1.4;margin:4px 0 0}
+</style>
+</head>
+<body>
+<div class="topbar">🔒 Ambiente 100% seguro <span>•</span> Pagamento processado pelo <img src="/img/mp-logo.png" alt="Mercado Pago"></div>
+<div class="wrap">
+  <div id="erroFatal" class="card hide"></div>
+
+  <div id="tela-form" class="hide">
+    <div class="card prod">
+      <img id="pImg" alt="" class="hide">
+      <div>
+        <div class="nm" id="pNome"></div>
+        <div class="ok">✔ Acesso imediato após o pagamento</div>
+        <div class="price" id="pPreco"></div>
+      </div>
+    </div>
+    <ul class="inc hide" id="pInclui"></ul>
+
+    <div class="card">
+      <div class="step"><span class="n">1</span> Seus dados</div>
+      <div class="warn">⚠️ Atenção: digite o seu e-mail com cuidado. É ele que libera o seu acesso e é para ele que enviamos o link.</div>
+      <label for="nome">Seu primeiro nome</label>
+      <input id="nome" type="text" autocomplete="given-name" autocapitalize="words" placeholder="Como podemos te chamar?">
+      <label for="email">Seu e-mail</label>
+      <input id="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" placeholder="exemplo@email.com">
+      <div class="warn" id="emailDica" style="display:none;margin-top:8px"></div>
+    </div>
+
+    <div class="card">
+      <div class="step"><span class="n">2</span> Como prefere pagar?</div>
+      <div class="tabs">
+        <button type="button" class="tab on" id="tab-pix">Pix<small>Aprovação na hora</small></button>
+        <button type="button" class="tab" id="tab-card">Cartão de crédito<small>Em até 3x</small></button>
+      </div>
+
+      <div id="box-card" class="hide">
+        <label>Número do cartão</label><div id="f-num" class="field"></div>
+        <div class="row">
+          <div><label>Validade</label><div id="f-exp" class="field"></div></div>
+          <div><label>Código (CVV)</label><div id="f-cvv" class="field"></div></div>
+        </div>
+        <label for="cnome">Nome como está no cartão</label>
+        <input id="cnome" type="text" autocomplete="cc-name" placeholder="NOME SOBRENOME">
+        <label for="ccpf">CPF do titular</label>
+        <input id="ccpf" type="tel" inputmode="numeric" maxlength="14" autocomplete="off" placeholder="000.000.000-00">
+        <div id="parcBox"><label for="parc">Selecione o número de parcelas</label><select id="parc" style="width:100%;height:54px;font-size:18px;padding:0 12px;border:2px solid var(--brd);border-radius:12px;background:#fff;color:var(--txt)"></select><div class="hint" id="parcNota" style="margin-top:6px"></div></div>
+        <div class="hint">🔒 Para compras no cartão de crédito, o CPF do titular deve ser informado, conforme as regras de pagamento com cartão. Ele é enviado direto ao Mercado Pago, com segurança. <b>No Pix, não pedimos CPF.</b></div>
+      </div>
+
+      <div class="howto">
+        <b class="t" id="howTitulo">Como pagar com Pix</b>
+        <ol id="howPassos"></ol>
+        <div class="inst">⚡ O acesso é imediato: o link aparece nesta tela assim que o pagamento é confirmado. Não feche esta tela, mas fique tranquilo: o acesso também será enviado para o seu e-mail.</div>
+      </div>
+    </div>
+
+    <div id="bumpsWrap" class="hide">
+      <div class="aprov">Aproveite e compre junto:</div>
+      <div id="bumps"></div>
+    </div>
+
+    <div class="card deps hide" id="depWrap">
+      <h2>💬 O que dizem os alunos</h2>
+      <p class="dsub"></p>
+      <div id="depLista"></div>
+      <p class="dfim">Nomes omitidos para proteger a privacidade dos alunos. Os resultados variam de pessoa para pessoa.</p>
+    </div>
+
+    <div class="card">
+      <div class="lines" id="linhas"></div>
+      <div class="total"><span>Total</span><span id="total"></span></div>
+      <div id="erro" class="err"></div>
+      <button class="btn" id="btnPagar" type="button">Gerar Pix</button>
+      <div class="selos">
+        <div class="selo"><i>🔒</i>Compra 100% segura</div>
+        <div class="selo"><i>⚡</i>Acesso imediato</div>
+        <div class="selo"><i>🛡️</i><span id="seloGar">Reembolso em até 7 dias</span></div>
+        <div class="selo"><i>✉️</i>Cópia enviada ao seu e-mail</div>
+      </div>
+      <div class="mp"><img src="/img/mp-logo.png" alt="Mercado Pago">Pagamento processado com segurança pelo Mercado Pago. Seus dados de cartão não passam pelo nosso site.</div>
+    </div>
+
+    <div class="foot">
+      <b>Programa FIRME</b> · Isabella Bianchi · Nutricionista · CRN 7104141<br>
+      Pagamento processado por 53.168.292 LUIZ FELIPE CORREA MIRANDA · CNPJ 53.168.292/0001-32<br>
+      Dúvidas? <a id="waFoot" href="#">Fale conosco pelo WhatsApp</a> ou escreva para <a id="mailFoot" href="#"></a>
+    </div>
+  </div>
+
+  <div id="tela-pix" class="hide">
+    <div class="card qr">
+      <h1 style="font-size:21px">Pague com Pix</h1>
+      <p class="sub">Valor: <b id="pixValor"></b></p>
+      <div class="recb">🔒 <b>Pagamento seguro.</b> <b>Pagando para:</b> 53.168.292 LUIZ FELIPE CORREA MIRANDA, responsável financeiro do programa.</div>
+      <img id="qrImg" class="q" alt="QR Code Pix">
+      <p style="margin:12px 0 0"><b>Ou copie o código:</b></p>
+      <div class="code" id="pixCodigo"></div>
+      <button class="btn2" id="btnCopiar" type="button">📋 Copiar código Pix</button>
+      <ol class="steps">
+        <li>Abra o app do seu banco</li>
+        <li>Escolha <b>Pix → Pix Copia e Cola</b> (ou leia o QR Code)</li>
+        <li>Cole o código e confirme o pagamento</li>
+      </ol>
+      <p><span class="wait"></span><b>Aguardando o pagamento...</b></p>
+      <div class="aviso">⚡ Assim que o Pix for confirmado, o botão de acesso aparece aqui. Não feche esta tela. Mas fique tranquilo: o acesso também será enviado para o seu e-mail.</div>
+    </div>
+  </div>
+
+  <div id="tela-ok" class="hide">
+    <div class="card okk">
+      <div class="big">✅</div>
+      <h1>Pagamento confirmado!</h1>
+      <p>Seu acesso já está liberado.</p>
+      <ol class="steps" id="okPassos">
+        <li>Toque no botão abaixo para abrir o aplicativo</li>
+        <li>Entre com este e-mail:<br><b id="okEmail"></b></li>
+      </ol>
+      <a class="linkbtn" id="btnApp">Abrir meu aplicativo</a>
+      <div class="aviso" style="margin-top:14px">✉️ Também enviamos o acesso para o seu e-mail. Se não encontrar, olhe a caixa de spam.</div>
+    </div>
+  </div>
+</div>
+
+<div class="xo hide" id="xo" role="dialog" aria-modal="true">
+  <div class="bx">
+    <button class="fx" id="xoFechar" type="button" aria-label="Fechar">×</button>
+    <img id="xoImg" alt="Oferta especial: 10% de desconto — toque para aproveitar">
+    <button class="nao" id="xoNao" type="button">Não, obrigado</button>
+  </div>
+</div>
+<script>
+(function(){
+  var SEG=location.pathname.replace(/^\/|\/$/g,'').split('/'), QS=new URLSearchParams(location.search);
+  var PID=SEG[0]||QS.get('p')||'';
+  var ITEM=(SEG[1]||QS.get('i')||'').toLowerCase().replace(/[^a-z0-9_-]/g,'');
+  var CFG=null, mp=null, metodo='pix', fields={}, bin='', pmId='', orderId=null, polling=null, enviando=false, bumpsSel={}, saida=false, xoVisto=false, MAXP=3, parcOpc={};
+  var $=function(id){return document.getElementById(id)};
+  var brl=function(v){return 'R$ '+Number(v).toFixed(2).replace('.',',')};
+  function show(id){['tela-form','tela-pix','tela-ok'].forEach(function(t){$(t).classList.toggle('hide',t!==id)});window.scrollTo(0,0)}
+  function fatal(m){$('erroFatal').textContent=m;$('erroFatal').classList.remove('hide')}
+  function erro(m){var e=$('erro');e.textContent=m||'';e.style.display=m?'block':'none'}
+  function cookie(n){var m=document.cookie.match('(?:^|; )'+n+'=([^;]*)');return m?decodeURIComponent(m[1]):''}
+  // Origem do clique (anúncio/conjunto/canal): lê da URL, guarda no aparelho e manda junto com o pedido.
+  // O fbclid também vira cookie _fbc quando o navegador (ex.: iOS / navegador do Instagram) não grava o do Meta.
+  var ATR=(function(){
+    var K=['utm_source','utm_medium','utm_campaign','utm_content','utm_term','utm_id','src','sck','fbclid','qsid'], o={}, st={};
+    try{st=JSON.parse(sessionStorage.getItem('chk_atr')||localStorage.getItem('chk_atr')||'{}')||{}}catch(e){}
+    if(QS.get('utm_source')==='app'||QS.get('origem')==='app') st={}; // compra de dentro do app: não herda a campanha antiga guardada no navegador
+    K.forEach(function(k){var v=QS.get(k); if(v&&v.length<250&&!/\{\{.*\}\}/.test(v)) o[k]=v; else if(st[k]) o[k]=st[k]});
+    var r=st.ref||''; if(!r&&document.referrer){try{var h=new URL(document.referrer).hostname; if(h&&h!==location.hostname) r=h}catch(e){}} if(r) o.ref=r;
+    try{var j=JSON.stringify(o); sessionStorage.setItem('chk_atr',j); localStorage.setItem('chk_atr',j)}catch(e){}
+    return o;
+  })();
+  function fbcVal(){var c=cookie('_fbc'); if(c) return c; return ATR.fbclid?('fb.1.'+Date.now()+'.'+ATR.fbclid):''}
+  function px(ev,data,eid){try{if(window.fbq)fbq('track',ev,data||{},eid?{eventID:eid}:undefined)}catch(e){}}
+  function novoId(pre){return pre+'_'+Date.now().toString(36)+Math.random().toString(36).slice(2,8)}
+  // Evento no pixel (navegador) + o mesmo evento pela API de Conversões (servidor), com o mesmo ID para deduplicar.
+  function evento(ev,data,extra){
+    var eid=novoId(ev.slice(0,2).toLowerCase());
+    px(ev,data,eid);
+    if(!CFG||!CFG.pixelId)return;
+    try{
+      if(ITEM)return;
+      var corpo=Object.assign({produto:PID,evento:ev,id:eid,url:location.href,valor:data&&data.value,fbp:cookie('_fbp'),fbc:fbcVal()},extra||{});
+      fetch('/api/evento',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(corpo),keepalive:true}).catch(function(){});
+    }catch(e){}
+  }
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){return({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]})}
+
+  // Mini carta de vendas do order bump: 1ª linha = título, "✓" = benefícios, "⚡" = fecho, o resto = parágrafos. Sem quebra de linha = texto simples.
+  function carta(t){
+    var L=String(t||'').split('\n').map(function(x){return x.trim()}).filter(Boolean);
+    if(L.length<2)return '';
+    var h='<div class="car"><div class="ch">'+esc(L[0])+'</div>',ul='';
+    L.slice(1).forEach(function(x){
+      if(x.charAt(0)==='✓'){ul+='<li>'+esc(x.slice(1).trim())+'</li>';return}
+      if(ul){h+='<ul>'+ul+'</ul>';ul=''}
+      h+=x.charAt(0)==='⚡'?'<div class="cf">'+esc(x.slice(1).trim())+'</div>':'<p>'+esc(x)+'</p>';
+    });
+    if(ul)h+='<ul>'+ul+'</ul>';
+    return h+'</div>';
+  }
+  function precoBase(){return saida&&CFG.produto.precoSaida?CFG.produto.precoSaida:CFG.produto.preco}
+  function total(){var t=Math.round(precoBase()*100);CFG.produto.bumps.forEach(function(b){if(bumpsSel[b.id])t+=Math.round(b.preco*100)});return t/100}
+  function atualiza(){
+    var l='<div class="l"><span>'+esc(CFG.produto.nome)+'</span><span>'+(saida&&CFG.produto.precoSaida?'<s>'+brl(CFG.produto.preco)+'</s>':'')+brl(precoBase())+'</span></div>';
+    if(saida&&CFG.produto.precoSaida)l+='<div class="l"><span>🎁 Desconto exclusivo de 10%</span><span>aplicado</span></div>';
+    $('pPreco').innerHTML=(saida&&CFG.produto.precoSaida?'<s style="color:#8a8f98;font-weight:400;font-size:.7em">'+brl(CFG.produto.preco)+'</s> ':'')+brl(precoBase())+' <small>à vista</small>';
+    CFG.produto.bumps.forEach(function(b){if(bumpsSel[b.id])l+='<div class="l"><span>+ '+esc(b.nome)+'</span><span>'+brl(b.preco)+'</span></div>'});
+    $('linhas').innerHTML=l;$('total').textContent=brl(total());
+    parcPadrao();var np=parcSel(),po=parcOpc[np];
+    $('btnPagar').textContent=metodo==='pix'?'GERAR PIX — '+brl(total()):(np>1&&po?'PAGAR '+np+'x DE '+brl(po.parcela)+' NO CARTÃO':'PAGAR '+brl(total())+' NO CARTÃO');
+    if(metodo==='card'&&mp&&bin&&parcTotal!==total())carregaParcelas();
+  }
+  var parcTotal=0;
+  // Sem cartão digitado ainda: mostra só "1x" (à vista), como a Hotmart; as demais opções chegam quando o cartão é reconhecido.
+  function parcPadrao(){if(Object.keys(parcOpc).length||!$('parc'))return;$('parc').innerHTML='<option value="1">1x de '+brl(total())+' (à vista)</option>';$('parcNota').textContent='Pagamento à vista, sem juros.'}
+  function parcSel(){var e=$('parc');var n=e?parseInt(e.value,10):1;return n>=1&&n<=MAXP?n:1}
+  // Parcelas: o Mercado Pago informa parcela e total (com juros) para o cartão digitado.
+  function carregaParcelas(){
+    parcTotal=total();
+    var box=$('parcBox');
+    mp.getInstallments({amount:String(total()),bin:bin,paymentTypeId:'credit_card'}).then(function(r){
+      var pc=(r&&r[0]&&r[0].payer_costs)||[];parcOpc={};var h='',ant=parcSel();
+      pc.forEach(function(c){
+        var n=c.installments;if(n<1||n>MAXP)return;
+        parcOpc[n]={parcela:c.installment_amount,total:c.total_amount};
+        h+='<option value="'+n+'">'+(n===1?'1x de '+brl(c.installment_amount)+' (à vista)':n+'x de '+brl(c.installment_amount)+' (total '+brl(c.total_amount)+')')+'</option>';
+      });
+      if(!h){parcOpc={};parcPadrao();return}
+      $('parc').innerHTML=h;if(parcOpc[ant])$('parc').value=ant;
+      parcNota();atualiza();
+    }).catch(function(){parcOpc={};parcPadrao()});
+  }
+  function parcNota(){var n=parcSel(),o=parcOpc[n];$('parcNota').textContent=n>1&&o?'Parcelado em '+n+'x com juros do cartão: total de '+brl(o.total)+'.':'Pagamento à vista, sem juros.'}
+
+
+  // Pop-up de saída: oferece 10% no produto principal uma única vez por visita.
+  function xoAbrir(){
+    if(xoVisto||saida||enviando||!CFG||!CFG.produto.precoSaida||!CFG.produto.imagemSaida)return;
+    if($('tela-form').classList.contains('hide'))return;
+    try{if(sessionStorage.getItem('xo_'+PID))return;sessionStorage.setItem('xo_'+PID,'1')}catch(e){}
+    xoVisto=true;$('xoImg').src=CFG.produto.imagemSaida;$('xo').classList.remove('hide');
+    px('ViewContent',{content_name:'exit_popup'});
+  }
+  function xoFechar(){$('xo').classList.add('hide')}
+  function xoAceitar(){
+    saida=true;xoFechar();atualiza();
+    var t=$('total');if(t&&t.scrollIntoView)t.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+  function xoInit(){
+    if(!CFG.produto.precoSaida)return;
+    $('xoImg').onclick=xoAceitar;$('xoFechar').onclick=xoFechar;$('xoNao').onclick=xoFechar;
+    document.addEventListener('mouseout',function(e){if(!e.relatedTarget&&e.clientY<=0)xoAbrir()});
+    try{history.pushState({xo:1},'',location.href);window.addEventListener('popstate',function(){if(!xoVisto&&!saida&&!$('tela-form').classList.contains('hide')){xoAbrir();if(!xoVisto)history.back()}else{history.back()}})}catch(e){}
+  }
+
+  function initPixel(){
+    if(!CFG.pixelId)return;
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init',CFG.pixelId);
+    fbq('track','PageView'); // só navegador: o PageView de servidor deve ficar na página de vendas
+    evento('InitiateCheckout',{value:total(),currency:'BRL',content_name:CFG.produto.nome});
+  }
+
+  function montaCampos(){
+    if(!window.MercadoPago||!CFG.publicKey)return;
+    mp=new MercadoPago(CFG.publicKey,{locale:'pt-BR'});
+    var st={color:'#14181f',fontSize:'19px',placeholderColor:'#9aa3af'};
+    fields.num=mp.fields.create('cardNumber',{placeholder:'0000 0000 0000 0000',style:st}).mount('f-num');
+    fields.exp=mp.fields.create('expirationDate',{placeholder:'MM/AA',style:st}).mount('f-exp');
+    fields.cvv=mp.fields.create('securityCode',{placeholder:'123',style:st}).mount('f-cvv');
+    $('parc').onchange=function(){parcNota();atualiza()};
+    fields.num.on('binChange',function(d){
+      var b=d&&d.bin; if(!b){bin='';pmId='';parcOpc={};parcTotal=0;atualiza();return}
+      if(b===bin)return; bin=b;
+      mp.getPaymentMethods({bin:b}).then(function(r){pmId=(r&&r.results&&r.results[0]&&r.results[0].id)||''}).catch(function(){pmId=''});
+      carregaParcelas();
+    });
+  }
+
+  function setMetodo(m){
+    metodo=m;
+    $('tab-pix').classList.toggle('on',m==='pix');$('tab-card').classList.toggle('on',m==='card');
+    $('box-card').classList.toggle('hide',m!=='card');
+    if(m==='pix'){
+      $('howTitulo').textContent='Como pagar com Pix';
+      $('howPassos').innerHTML='<li>Toque em <b>Gerar Pix</b> no final da página</li><li>Copie o código e pague no app do seu banco (Pix Copia e Cola)</li><li>Pronto! O acesso é liberado na hora</li>';
+    }else{
+      $('howTitulo').textContent='Como pagar com cartão de crédito';
+      $('howPassos').innerHTML='<li>Preencha os dados do cartão acima</li><li>Toque em <b>Pagar</b> no final da página</li><li>Pronto! O acesso é liberado na hora</li>';
+    }
+    erro('');atualiza();
+    if(m==='card'&&!fields.num)montaCampos();
+  }
+
+  var DOM={'gmial.com':'gmail.com','gmal.com':'gmail.com','gamil.com':'gmail.com','gnail.com':'gmail.com','gmail.con':'gmail.com','gmail.com.br':'gmail.com','gmaill.com':'gmail.com','gmeil.com':'gmail.com','hotmial.com':'hotmail.com','hotmail.con':'hotmail.com','hotnail.com':'hotmail.com','hotmal.com':'hotmail.com','outlook.con':'outlook.com','outlok.com':'outlook.com','yahooo.com':'yahoo.com','yaho.com':'yahoo.com','yahoo.con':'yahoo.com','icloud.con':'icloud.com'};
+  function sugestao(a){var d=a.split('@')[1]||'';return DOM[d]?a.split('@')[0]+'@'+DOM[d]:''}
+  var dicaFeita='';
+  function validaEmail(){
+    var a=$('email').value.trim().toLowerCase();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(a)){erro('Confira o e-mail digitado.');$('email').focus();return null}
+    var sg=sugestao(a);
+    if(sg&&dicaFeita!==a){
+      dicaFeita=a;var d=$('emailDica');d.style.display='block';
+      d.innerHTML='Você quis dizer <b>'+esc(sg)+'</b>? <a href="#" id="emailCorrige" style="color:#0b57d0">Sim, corrigir</a> · se está certo, toque em pagar de novo.';
+      $('emailCorrige').onclick=function(e){e.preventDefault();$('email').value=sg;d.style.display='none'};
+      erro('Confira se o e-mail está certo antes de continuar.');return null;
+    }
+    return a;
+  }
+
+  async function pagar(){
+    if(enviando)return; erro('');
+    var nome=$('nome').value.trim();
+    if(nome.length<2){erro('Digite o seu primeiro nome.');$('nome').focus();return}
+    var email=validaEmail(); if(!email)return;
+    var corpo={produto:PID,avulso:ITEM,bumps:Object.keys(bumpsSel).filter(function(k){return bumpsSel[k]}),nome:nome,email:email,metodo:metodo,saida:saida,fbp:cookie('_fbp'),fbc:fbcVal(),atrib:ATR};
+    enviando=true;$('btnPagar').disabled=true;var txt=$('btnPagar').textContent;$('btnPagar').textContent='Aguarde...';
+    try{
+      if(metodo==='card'){
+        var cpf=$('ccpf').value.replace(/\D/g,''),nomeCartao=$('cnome').value.trim();
+        if(!nomeCartao){erro('Digite o nome como está no cartão.');return}
+        if(!pmId){erro('Confira o número do cartão.');return}
+        var tk=await mp.fields.createCardToken({cardholderName:nomeCartao,identificationType:'CPF',identificationNumber:cpf});
+        corpo.card={token:tk.id,payment_method_id:pmId,cpf:cpf,nome:nomeCartao,installments:parcSel()};
+      }
+      var r=await fetch('/api/pagar',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(corpo)});
+      var d=await r.json();
+      if(!r.ok){erro(d.error||'Não foi possível concluir. Tente novamente.');return}
+      orderId=d.id;
+      // Correspondência avançada: com e-mail e nome em mãos, o pixel os envia (o Meta aplica o hash).
+      try{if(window.fbq&&CFG.pixelId)fbq('init',CFG.pixelId,{em:email,fn:(nome||'').split(' ')[0].toLowerCase()})}catch(e){}
+      evento('AddPaymentInfo',{value:total(),currency:'BRL'},{email:email,nome:nome});
+      window._email=email;
+      if(d.status==='aprovado'){sucesso(email);return}
+      if(d.pix){
+        $('pixValor').textContent=brl(d.valor);$('pixCodigo').textContent=d.pix.copiaECola;
+        $('qrImg').src='data:image/png;base64,'+d.pix.qrBase64;show('tela-pix');
+      } else { show('tela-pix');$('qrImg').classList.add('hide'); }
+      iniciaPolling();
+    }catch(e){
+      erro(metodo==='card'?'Confira os dados do cartão e tente de novo.':'Falha de conexão. Tente novamente.');
+    }finally{enviando=false;$('btnPagar').disabled=false;$('btnPagar').textContent=txt}
+  }
+
+  function iniciaPolling(){
+    var t0=Date.now();
+    clearInterval(polling);
+    polling=setInterval(async function(){
+      if(Date.now()-t0>2*60*60*1000){clearInterval(polling);return}
+      try{
+        var r=await fetch('/api/status?id='+encodeURIComponent(orderId));var d=await r.json();
+        if(d.status==='aprovado'){clearInterval(polling);sucesso(window._email)}
+        else if(d.status==='falhou'){clearInterval(polling);show('tela-form');erro('O pagamento não foi concluído. Tente de novo.')}
+      }catch(e){}
+    },4000);
+  }
+
+
+  function brlS(v){return Number(v).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
+  function sucesso(email){
+    px('Purchase',{value:total(),currency:'BRL',content_name:CFG.produto.nome},'purchase_'+orderId);
+    $('okEmail').textContent=email;$('btnApp').href=CFG.produto.appUrl+'/login';
+    $('okPassos').innerHTML='<li>Toque no botão abaixo para abrir o aplicativo</li><li>Digite este e-mail:<br><b>'+esc(email)+'</b></li><li>Digite o código de 6 dígitos que chegar no seu e-mail (não precisa de senha)</li>';
+    show('tela-ok');
+  }
+
+  function copiar(){
+    var t=$('pixCodigo').textContent;
+    (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){$('btnCopiar').textContent='✅ Código copiado!'})
+    .catch(function(){var r=document.createRange();r.selectNodeContents($('pixCodigo'));var s=getSelection();s.removeAllRanges();s.addRange(r);$('btnCopiar').textContent='Segure no código e toque em Copiar'});
+  }
+
+  function maskCpf(e){var v=e.target.value.replace(/\D/g,'').slice(0,11);
+    v=v.replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})$/,'$1-$2');e.target.value=v}
+
+  async function init(){
+    try{
+      var em0=(QS.get('email')||'').trim().toLowerCase();
+      var r=await fetch('/api/config?p='+encodeURIComponent(PID)+(QS.get('b2')?'&b2='+encodeURIComponent(QS.get('b2')):'')+(ITEM?'&i='+encodeURIComponent(ITEM)+(em0?'&e='+encodeURIComponent(em0):''):''));
+      if(!r.ok)throw 0; CFG=await r.json();
+    }catch(e){return fatal('Link de pagamento inválido. Volte à página da oferta e tente de novo.')}
+    if(CFG.teste){var tb=document.createElement('div');tb.style.cssText='background:#b00020;color:#fff;text-align:center;font-weight:800;padding:8px;font-size:15px';tb.textContent='⚠️ MODO DE TESTE DE PREÇO ATIVO — cobrança reduzida';document.body.insertBefore(tb,document.body.firstChild)}
+    var wa=$('waFoot');if(CFG.whatsapp)wa.href='https://wa.me/'+CFG.whatsapp+'?text='+encodeURIComponent('Olá! Tenho uma dúvida sobre o Programa FIRME antes de comprar.');else wa.style.display='none';
+    var ml=$('mailFoot');ml.href='mailto:'+CFG.contato;ml.textContent=CFG.contato;
+    $('seloGar').textContent='Reembolso em até '+CFG.garantiaDias+' dias';
+    if(CFG.produto.inclui&&CFG.produto.inclui.length){$('pInclui').innerHTML=CFG.produto.inclui.map(function(t){return '<li>'+esc(t)+'</li>'}).join('');$('pInclui').classList.remove('hide')}
+    document.title='Pagamento seguro — '+CFG.produto.nome;
+    $('pNome').textContent=CFG.produto.nome;$('pPreco').innerHTML=brl(CFG.produto.preco)+' <small>à vista</small>';
+    var q=QS.get('email'),qn=QS.get('nome');
+    if(q&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(q))$('email').value=q;
+    if(qn)$('nome').value=qn.slice(0,40);
+    if(ITEM){
+      document.querySelector('.warn').innerHTML='⚠️ Use o <b>mesmo e-mail com que você entra no aplicativo</b>. É ele que libera o seu acesso.';
+    }
+    if(CFG.produto.imagem){$('pImg').src=CFG.produto.imagem;$('pImg').classList.remove('hide')}
+    if(CFG.produto.depoimentos&&CFG.produto.depoimentos.length){
+      $('depLista').innerHTML=CFG.produto.depoimentos.map(function(d){
+        var meta=[d.detalhe,d.data].filter(Boolean).join(' · ');
+        return '<div class="dep"><q>“'+esc(d.texto)+'”</q><span class="dm">Aluno(a) · mensagem no WhatsApp'+(meta?' · '+esc(meta):'')+'</span></div>'}).join('');
+      $('depWrap').classList.remove('hide');
+    }
+    if(CFG.produto.bumps.length){
+      $('bumpsWrap').classList.remove('hide');
+      if(CFG.exclusivas){var n=CFG.produto.bumps.length;$('bumpsWrap').firstElementChild.outerHTML='<div class="exc"><span>🔥</span><span>'+n+(n>1?' ofertas exclusivas':' oferta exclusiva')+' para você</span></div><p class="excSub">Adicione ao seu pedido agora e economize.</p>'}
+      CFG.produto.bumps.forEach(function(b){
+        var off=b.de>b.preco?Math.round((1-b.preco/b.de)*100):0;
+        var d=document.createElement('div');d.className='bump';
+        d.innerHTML='<div class="top">'+(b.imagem?'<img src="'+esc(b.imagem)+'" alt="">':'')+
+          '<div><div class="bt">'+esc(b.nome)+'</div>'+(carta(b.desc)?'':'<div class="bd">'+esc(b.desc)+'</div>')+
+          '<div class="bp">'+(b.de>b.preco?'<s>'+brl(b.de)+'</s><span class="off">'+off+'% OFF</span>':'')+'<b>'+brl(b.preco)+'</b></div></div></div>'+carta(b.desc)+
+          '<label class="bar"><input type="checkbox"><span>'+esc(b.cta||'Sim! Quero adicionar ao meu pedido')+'</span></label>';
+        d.querySelector('input').addEventListener('change',function(e){bumpsSel[b.id]=e.target.checked;d.classList.toggle('sel',e.target.checked);atualiza()});
+        $('bumps').appendChild(d);
+      });
+    }
+    show('tela-form');initPixel();
+    // Microsoft Clarity: só observação (gravação de sessões), carrega depois da página. Campos de dados pessoais ficam mascarados.
+    if(CFG.clarityId){
+      ['nome','email','ccpf'].forEach(function(i){var e=$(i);if(e)e.setAttribute('data-clarity-mask','True')});
+      var cl=function(){(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,'clarity','script',CFG.clarityId);
+        try{window.clarity('set','produto',PID);window.clarity('set','pagina','checkout')}catch(e){}};
+      if(document.readyState==='complete')cl();else addEventListener('load',cl);
+    }
+    $('tab-pix').onclick=function(){setMetodo('pix')};$('tab-card').onclick=function(){setMetodo('card')};
+    xoInit();$('btnPagar').onclick=pagar;$('btnCopiar').onclick=copiar;$('ccpf').addEventListener('input',maskCpf);
+    setMetodo('pix');
+  }
+  init();
+})();
+</script>
+<script src="https://sdk.mercadopago.com/js/v2" async></script>
+</body>
+</html>
