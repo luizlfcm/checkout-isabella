@@ -31,6 +31,15 @@ const ITENS = {
     desc: 'Cozinhe uma vez e tenha três refeições diferentes\n✓ 20 preparos-base que viram 3 finalizações cada: 60 combinações\n✓ Porções para dois e dicas de conservação\n✓ Menos tempo na cozinha ao longo da semana\n⚡ PDF para baixar, ler no celular ou imprimir.',
     cta: 'Sim, quero o Cozinha Multiplica!',
   },
+  // Atualização do plano aos 45 dias: só existe como link avulso (/firme/renovacao), vendido dentro do app e no e-mail de lembrete.
+  // Grava acessos(produto='renovacao', pedido=<id>); o app abre o formulário curto e avisa a nutricionista.
+  renovacao: {
+    id: 'renovacao', flag: 'renovacao', hotmartId: 9300007, preco: preco('PRECO_RENOVACAO', 19.9), de: null,
+    nome: 'Atualização do plano', titulo: 'Atualização do plano alimentar — Programa FIRME, com a nutricionista Isabella Bianchi',
+    imagem: '/img/firme.png',
+    desc: 'Seu plano atualizado para a sua rotina de hoje\n✓ Você responde algumas perguntas rápidas no aplicativo\n✓ A nutricionista atualiza o seu plano alimentar com os seus dados novos\n✓ Plano novo no aplicativo em até 3 dias depois das suas respostas\n⚡ Pagamento único, sem assinatura.',
+    cta: 'Quero atualizar o meu plano',
+  },
   cardapios: {
     id: 'cardapios', flag: 'cardapios', hotmartId: 9300005, preco: preco('PRECO_CARDAPIOS'), de: preco('PRECO_CARDAPIOS_DE'),
     nome: 'Cardápios da Semana', titulo: 'Cardápios da Semana — 4 semanas de almoços e jantares planejados',

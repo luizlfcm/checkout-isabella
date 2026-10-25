@@ -60,6 +60,7 @@ export async function enviarEntrega(reg) {
   const flags = reg.flags || [];
   const temFirme = flags.includes('firme');
   const temTreino = flags.includes('treino');
+  const temRenovacao = flags.includes('renovacao');
 
   // Links de download direto dos PDFs comprados (sem login)
   const links = [];
@@ -77,6 +78,15 @@ export async function enviarEntrega(reg) {
   const ciclo = temFirme
     ? `<p style="margin:14px 0 0">Um aviso para você já ir sabendo: o seu plano alimentar é pensado para cerca de <b>45 dias</b>. Nesse tempo a rotina, o apetite e o peso mudam, e o cardápio precisa acompanhar para continuar encaixando no seu dia a dia. Perto do dia 45 a gente te avisa por e-mail, e você poderá atualizar o plano com os seus dados novos, se quiser. Por enquanto, é só começar.</p>`
     : '';
+
+  if (temRenovacao) {
+    const m = `<p style="margin:0 0 10px">Olá${nome ? ', ' + esc(nome) : ''}! Seu pagamento da atualização do plano foi confirmado.</p>
+<p style="margin:0 0 6px"><b>Próximo passo:</b> abra o aplicativo e responda as perguntas rápidas. Com elas, a nutricionista atualiza o seu plano em até 3 dias, e você recebe um e-mail quando estiver pronto.</p>
+${botao(`${APP()}/app/atualizar`, 'Responder as perguntas')}
+<p style="margin:20px 0 0;font-size:13px;color:#4F6B62">Reembolso em até ${GARANTIA()} dias, se mudar de ideia: basta responder este e-mail.</p>`;
+    return resend(reg.email, 'Atualização do plano — pagamento confirmado', moldura('Atualização confirmada', m),
+      `Olá${nome ? ', ' + nome : ''}! Pagamento da atualização confirmado. Responda as perguntas rápidas em ${APP()}/app/atualizar e a nutricionista atualiza o seu plano em até 3 dias. Reembolso em até ${GARANTIA()} dias: responda este e-mail (${CONTATO()}).`);
+  }
 
   const miolo = `<p style="margin:0 0 10px">Olá${nome ? ', ' + esc(nome) : ''}! Seu pagamento foi confirmado. Você comprou:</p>
 <ul style="margin:0 0 14px;padding-left:20px">${comprados.map((n) => `<li>${esc(n)}</li>`).join('')}</ul>

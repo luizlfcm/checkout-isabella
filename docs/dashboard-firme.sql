@@ -12,5 +12,6 @@ insert into ofertas (produto_id, nome, tipo, funil_id) values
   (9300003, 'Airfryer Express', 'OrderBump', 'BM 4'),
   (9300004, 'Cozinha Multiplica', 'OrderBump', 'BM 4'),
   (9300005, 'Cardápios da Semana', 'Upsell', 'BM 4'),
-  (9300006, 'Dose Doce', 'Upsell', 'BM 4')
+  (9300006, 'Dose Doce', 'Upsell', 'BM 4'),
+  (9300007, 'Atualização do plano (45 dias)', 'Upsell', 'BM 4')
 on conflict (produto_id) do nothing;
