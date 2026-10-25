@@ -11,3 +11,6 @@ Reembolso: remove o acesso (`ativo=false`) e envia e-mail.
 Itens sem preço (Treino e Cardápios) ficam ocultos até definir `PRECO_TREINO` / `PRECO_CARDAPIOS`. Variáveis: ver `.env.example`.
 
 Pendente: `/api/lead` + `qsid` (quiz), upsell pós-compra (Cardápios), capa do Treino, pixel/CAPI e Clarity do FIRME.
+
+## Dashboard
+O checkout avisa o dashboard (`/api/webhooks/checkout`) de cada pedido (`ORDER_STATUS`), venda (`PURCHASE_APPROVED`) e reembolso (`PURCHASE_REFUNDED`), com UTM/fbclid em `atrib`. É o mesmo formato dos outros produtos. Cadastre o funil e as ofertas com `docs/dashboard-firme.sql` e configure `DASHBOARD_URL` e `DASHBOARD_WEBHOOK_SECRET`. Em modo de teste (preço de teste ou Pix de teste) nada é enviado.
