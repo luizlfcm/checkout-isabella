@@ -73,15 +73,20 @@ export async function enviarEntrega(reg) {
   const proximo = temFirme || temTreino
     ? `<p style="margin:14px 0 0">Depois de entrar, responda à avaliação${temFirme && temTreino ? ' de nutrição e a de treino' : temTreino ? ' de treino' : ''}. É a partir dela que ${temFirme && temTreino ? 'a Isabella e o Luiz montam' : temTreino ? 'o educador físico monta' : 'a nutricionista monta'} o seu plano, e você será avisada(o) por e-mail quando ele for liberado.</p>`
     : '';
+  // Ciclo de 45 dias: só é apresentado depois do pagamento (nunca na PV, no quiz ou no checkout).
+  const ciclo = temFirme
+    ? `<p style="margin:14px 0 0">Um aviso para você já ir sabendo: o seu plano alimentar é pensado para cerca de <b>45 dias</b>. Nesse tempo a rotina, o apetite e o peso mudam, e o cardápio precisa acompanhar para continuar encaixando no seu dia a dia. Perto do dia 45 a gente te avisa por e-mail, e você poderá atualizar o plano com os seus dados novos, se quiser. Por enquanto, é só começar.</p>`
+    : '';
 
   const miolo = `<p style="margin:0 0 10px">Olá${nome ? ', ' + esc(nome) : ''}! Seu pagamento foi confirmado. Você comprou:</p>
 <ul style="margin:0 0 14px;padding-left:20px">${comprados.map((n) => `<li>${esc(n)}</li>`).join('')}</ul>
 <p style="margin:0 0 6px"><b>Como entrar no aplicativo:</b></p>
 <ol style="margin:0;padding-left:20px"><li>Abra o link abaixo.</li><li>Digite este e-mail: <b>${esc(reg.email)}</b></li><li>Digite o código de 6 dígitos que enviaremos para você. Não precisa de senha.</li></ol>
-${botao(`${APP()}/login`, 'Entrar no aplicativo')}${proximo}${listaPdf}
+${botao(`${APP()}/login`, 'Entrar no aplicativo')}${proximo}${ciclo}${listaPdf}
 <p style="margin:20px 0 0;font-size:13px;color:#4F6B62">Reembolso em até ${GARANTIA()} dias, se mudar de ideia: basta responder este e-mail.</p>`;
 
   const text = `Olá${nome ? ', ' + nome : ''}! Seu pagamento foi confirmado (${comprados.join(', ')}).\nEntre em ${APP()}/login com o e-mail ${reg.email} e use o código de 6 dígitos enviado por e-mail (sem senha).\n` +
+    (temFirme ? `Seu plano alimentar é pensado para cerca de 45 dias; perto do dia 45 avisamos por e-mail para você atualizá-lo, se quiser.\n` : '') +
     links.map(([r, h]) => `${r}: ${h}`).join('\n') + `\nReembolso em até ${GARANTIA()} dias: responda este e-mail (${CONTATO()}).`;
   return resend(reg.email, `${comprados[0]} — acesso liberado`, moldura('Seu acesso está liberado', miolo), text);
 }
