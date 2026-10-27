@@ -4,10 +4,14 @@
 import { createHash } from 'crypto';
 import { PRODUTOS, envId } from './_lib/produtos.js';
 
-const PERMITIDOS = new Set(['PageView', 'ViewContent', 'InitiateCheckout', 'AddPaymentInfo']);
+const PERMITIDOS = new Set(['PageView', 'ViewContent', 'Lead', 'InitiateCheckout', 'AddPaymentInfo']);
 const sha = (v) => createHash('sha256').update(String(v).trim().toLowerCase()).digest('hex');
 
 export default async function handler(req, res) {
+  // A PV e o quiz ficam em outro domínio e chamam esta rota (beacon text/plain, sem preflight).
+  res.setHeader('Access-Control-Allow-Origin', process.env.QUIZ_ORIGIN || '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method !== 'POST') return res.status(405).end();
   try {
     const b = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {});
@@ -40,7 +44,7 @@ export default async function handler(req, res) {
       user_data: user,
     };
     const valor = Number(b.valor);
-    if (evento !== 'PageView' && evento !== 'ViewContent' && valor > 0 && valor < 10000) {
+    if (evento !== 'PageView' && evento !== 'ViewContent' && evento !== 'Lead' && valor > 0 && valor < 10000) {
       evt.custom_data = { currency: 'BRL', value: valor, content_name: p.nome };
     }
     const body = { data: [evt] };
